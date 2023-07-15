@@ -1,0 +1,562 @@
+<?xml version="1.0"?>
+<robot name="hand_T42_model">
+
+    <material name="light_black">
+        <color rgba="0.9 0.9 0.9 1"/>
+    </material>
+
+    <link name="world"/>
+
+    <link name="rail">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="0.02" length="0.8"/>
+            </geometry>
+            <material name="not_sure">
+                <color rgba="0.1 0.1 0.1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="base_link">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.1"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.065 0 -0.04" rpy="1.57 -1.57 -1.57"/>
+            <geometry>
+                <mesh filename="/meshes/base_link.STL"/>
+            </geometry>
+            <material name="not_sure">
+                <color rgba="0.1 0.1 0.1 1"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="eef_base_link">
+        <inertial>
+            <origin xyz="0.016393 0.018659 0.059171" rpy="0.0 0.0 0.0"/>
+            <mass value="1.0593"/>
+            <inertia ixx="0.00038513" ixy="1.4535E-06" ixz="1.1774E-05" iyy="0.00027643" iyz="-1.9906E-05" izz="0.0001239"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/base_link.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/base_link.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_index_pro">
+        <inertial>  
+            <origin xyz="-0.015335 -0.0070564 -0.00012458" rpy="0.0 0.0 0.0"/>
+            <mass value="1.00678"/> 
+            <inertia ixx="4.2209E-07" ixy="3.8484E-12" ixz="-1.3288E-08" iyy="2.19E-06" iyz="3.5041E-12" izz="2.1173E-06"/>
+        </inertial>
+        <visual >
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/index_prox.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/index_prox.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_index_mid">
+        <inertial>
+            <origin xyz="-0.0089915 -0.0070381 8.4624E-05" rpy="0 0 0" />
+            <mass value="1.00399"/>
+            <inertia ixx="1.7784E-07" ixy="-2.2779E-10" ixz="-1.1546E-09" iyy="4.8724E-07" iyz="-4.771E-11" izz="4.9093E-07"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/index_mid.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/index_mid.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_index_dist">
+        <inertial>
+            <origin rpy="0 0 0" xyz="-0.0074384 0.0070355 1.7758E-06"/>
+            <mass value="1.00327"/>
+            <inertia ixx="1.3724E-07" ixy="3.2232E-13" ixz="2.3383E-10" iyy="3.2245E-07" iyz="1.2857E-12" izz="3.094E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/index_dist.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/index_dist.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_middle_pro">
+        <inertial>
+            <origin rpy="0 0 0" xyz="-0.01763 0.0073242 -0.0001101"/>
+            <mass value="1.00771"/>
+            <inertia ixx="4.579E-07" ixy="1.2849E-12" ixz="-1.5118E-08" iyy="2.8916E-06" iyz="3.4302E-12" izz="2.8144E-06"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/middle_prox.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/middle_prox.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_middle_mid">
+        <inertial>
+            <origin rpy="0 0 0" xyz="-0.010522 0.0070341 -7.1483E-05"/>
+            <mass value="1.00376"/>
+            <inertia ixx="2.0432E-07" ixy="1.8232E-11" ixz="1.9706E-09" iyy="6.2996E-07" iyz="-2.0067E-11" izz="6.3381E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/middle_mid.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/middle_mid.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_middle_dist">
+        <inertial>
+            <!-- <mass value="0.00571635598422"/> -->
+            <origin rpy="0 0 0" xyz="-0.0085016 0.0070361 3.0009E-06"/>
+            <mass value="1.00366"/>
+            <inertia ixx="1.5372E-07" ixy="-9.2026E-12" ixz="2.0172E-10" iyy="3.9693E-07" iyz="2.9967E-11" izz="3.8394E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/middle_dist.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/middle_dist.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_ring_pro">
+        <inertial>
+            <!-- <mass value="0.0121271298869"/> -->
+            <origin rpy="0 0 0" xyz="-0.016218 0.0073224 -0.00012942"/>
+            <mass value="1.00732"/>
+            <inertia ixx="4.2959E-07" ixy="-5.0483E-12" ixz="-1.5747E-08" iyy="2.4433E-06" iyz="-3.1849E-12" izz="2.3701E-06"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/ring_prox.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/ring_prox.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_ring_mid">
+        <inertial>
+            <!-- <mass value="0.00638548289089"/> -->
+            <origin rpy="0 0 0" xyz="-0.010504 0.0070364 6.973E-05"/>
+            <mass value="1.00390"/>
+            <inertia ixx="2.04E-07" ixy="7.7934E-10" ixz="-2.3659E-09" iyy="6.2779E-07" iyz="-6.4445E-11" izz="6.3153E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/ring_mid.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/ring_mid.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_ring_dist">
+        <inertial>
+            <!-- <mass value="0.00571637591814"/> -->
+            <origin rpy="0 0 0" xyz="-0.0085016 0.0070333 3.0009E-06"/>
+            <mass value="1.00372"/>
+            <inertia ixx="1.5372E-07" ixy="-9.2026E-12" ixz="2.0172E-10" iyy="3.9693E-07" iyz="2.9967E-11" izz="3.8394E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/ring_dist.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/ring_dist.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_little_pro">
+        <inertial>
+            <!-- <mass value="0.00964341557556"/> -->
+            <origin rpy="0 0 0" xyz="-0.011948 -0.012943 -0.00014689"/>
+            <mass value="1.00562"/>
+            <inertia ixx="3.4804E-07" ixy="-2.9617E-13" ixz="-1.0664E-08" iyy="1.4031E-06" iyz="1.008E-11" izz="1.3404E-06"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/little_prox.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/little_prox.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_little_mid">
+        <inertial>
+            <!-- <mass value="0.00422934093983"/> -->
+            <origin rpy="0 0 0" xyz="-0.006413 -0.0070321 -0.00011564"/>
+            <mass value="1.00222"/>
+            <inertia ixx="1.3413E-07" ixy="5.5957E-10" ixz="1.1683E-10" iyy="3.0384E-07" iyz="-3.6961E-11" izz="3.0729E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/little_mid.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/little_mid.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_little_dist">
+        <inertial>
+            <origin rpy="0 0 0" xyz="-0.0074384 -0.007035 1.7758E-06"/>
+            <mass value="1.00321"/>
+            <inertia ixx="1.3724E-07" ixy="3.2232E-13" ixz="2.3383E-10" iyy="3.2245E-07" iyz="1.2857E-12" izz="3.094E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/little_distal.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/little_distal.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_thumb_meta">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.015247 0.04728 -0.0025001"/>
+            <mass value="1.01690"/>
+            <inertia ixx="3.1805E-06" ixy="-1.0438E-06" ixz="-4.4113E-07" iyy="6.7139E-06" iyz="-2.5974E-07" izz="8.349E-06"/>
+        </inertial>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/thumb_prox.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/thumb_prox.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+    </link>
+
+    <link name="eef_thumb_pro">
+        <inertial>
+            <origin rpy="0 0 0" xyz="-0.011702 -0.003711 -4.5705E-05"/>
+            <mass value="1.00537"/>
+            <inertia ixx="3.402E-07" ixy="1.5304E-12" ixz="2.1222E-09" iyy="1.3437E-06" iyz="-1.2178E-13" izz="1.2788E-06"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/thumb_mid.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/thumb_mid.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="eef_thumb_dist">
+        <inertial>
+            <origin rpy="0 0 0" xyz="-0.011628 -0.0037111 2.6444E-06"/>
+            <mass value="1.00486"/>
+            <inertia ixx="2.035E-07" ixy="-2.2531E-12" ixz="1.151E-10" iyy="6.9276E-07" iyz="4.33E-14" izz="6.8002E-07"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/thumb_dist.STL" scale="1 1 1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="/meshes/meshes_manash_no_circle/thumb_dist.STL" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Camera -->
+    <link name="camera_link">base_to_finger_2_1_position_controller
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.1 0.1 0.1"/>
+            </geometry>
+            <material name="light_black"/>
+        </visual>
+    </link>  
+        
+    <!-- Joints -->
+    <joint name="world_to_rail" type="fixed">
+        <origin xyz="0.37 0 0.4" rpy="0 0 0" />
+        <parent link="world"/>
+        <child link="rail"/>
+    </joint>
+
+    <joint name="rail_to_camera" type="fixed">
+        <origin xyz="-0.2 0 0.7" rpy="0 1.57 3.14" />
+        <parent link="rail"/>
+        <child link="camera_link"/>
+        <axis xyz="0 0 -1" />
+    </joint>
+
+    <joint name="rail_to_base" type="prismatic">
+        <origin rpy="0 0 0" xyz="-0.06 0.000000 0.2" />
+        <parent link="rail" />
+        <child link="base_link" />
+        <axis xyz="0 0 1"/>
+        <limit  lower="-100." upper="100." velocity="1000" effort="100000"/>
+    </joint>  
+
+    <joint name="base_link_to_eef_base_link" type="fixed">
+        <origin rpy="0 0 -1.57" xyz="0 0.025 -0.0250000" />
+        <parent link="base_link" />
+        <child link="eef_base_link" />
+    </joint>
+
+    <joint name="eef_index_mcp" type="revolute">
+        <origin rpy="-1.5708 0 1.6337" xyz="0.015977 -0.12083 0.049863"/>
+        <parent link="eef_base_link"/>
+        <child link="eef_index_pro"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="0" upper="0.87266" velocity="100" effort="1000"/>
+        <dynamics damping="1.0" friction="10" />
+    </joint>
+
+    <joint name="eef_index_pip" type="revolute">
+        <origin rpy="0 0.083141 0" xyz="-0.04 -2.0955E-05 0"/>
+        <parent link="eef_index_pro"/>
+        <child link="eef_index_mid"/>
+        <axis xyz="0 -1 0"/>
+        <limit  lower="0" upper="1.2915" velocity="100" effort="1000"/>
+        <dynamics damping="1.0" friction="10" />
+    </joint>
+
+    <joint name="eef_index_dip" type="revolute">
+        <origin rpy="-3.1416 0 0" xyz="-0.023 0 0"/>
+        <parent link="eef_index_mid"/>
+        <child link="eef_index_dist"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.1868" velocity="100" effort="1000"/>
+        <dynamics damping="1.0" friction="10" />
+    </joint>
+
+    <joint name="eef_middle_mcp" type="revolute">
+        <origin rpy="1.5708 0 1.6194" xyz="0.015977 -0.12083 0.025596"/>
+        <parent link="eef_base_link"/>
+        <child link="eef_middle_pro"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.4661" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_middle_pip" type="revolute">
+        <origin rpy="0 -0.068856 0" xyz="-0.045 0.00028919 0"/>
+        <parent link="eef_middle_pro"/>
+        <child link="eef_middle_mid"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.9722" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_middle_dip" type="revolute">
+        <origin rpy="0 0 0" xyz="-0.026 0 0"/>
+        <parent link="eef_middle_mid"/>
+        <child link="eef_middle_dist"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.2566" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_ring_mcp" type="revolute">
+        <origin rpy="1.5708 0 1.6273" xyz="0.015977 -0.12083 0.0035975"/>
+        <parent link="eef_base_link"/>
+        <child link="eef_ring_pro"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.4486" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_ring_pip" type="revolute">
+        <origin rpy="0 -0.076772 0" xyz="-0.042 0.00029031 0"/>
+        <parent link="eef_ring_pro"/>
+        <child link="eef_ring_mid"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.2566" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_ring_dip" type="revolute">
+        <origin rpy="0 0 0" xyz="-0.026 0 0"/>
+        <parent link="eef_ring_mid"/>
+        <child link="eef_ring_dist"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.2043" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_little_mcp" type="revolute">
+        <origin rpy="1.5708 0 1.6677" xyz="0.015977 -0.12083 -0.00013651"/>
+        <parent link="eef_base_link"/>
+        <child link="eef_little_pro"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.4486" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_little_pip" type="revolute">
+        <origin rpy="0 -0.11711 0" xyz="-0.033 -0.0059085 0"/>
+        <parent link="eef_little_pro"/>
+        <child link="eef_little_mid"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.9897" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_little_dip" type="revolute">
+        <origin rpy="0 0 0" xyz="-0.018 0 0"/>
+        <parent link="eef_little_mid"/>
+        <child link="eef_little_dist"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.1868" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+
+    <joint name="eef_thumb_mcp" type="revolute">
+        <origin rpy="1.8622 -1.0203 1.2122" xyz="0.020198 -0.011043 0.025379"/>
+        <parent link="eef_base_link"/>
+        <child link="eef_thumb_meta"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="0" upper="1.7453" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint>
+    
+    <joint name="eef_thumb_pip" type="revolute">
+        <origin rpy="0.2618 0 -2.3562" xyz="0.037899 0.055864 0.00096047"/>
+        <parent link="eef_thumb_meta"/>
+        <child link="eef_thumb_pro"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.4137" velocity="100" effort="1000" />
+        <dynamics damping="1" friction="10" />
+    </joint>
+    
+    <joint name="eef_thumb_dip" type="revolute">
+        <origin rpy="0 -0.12435 0" xyz="-0.032 0 0"/>
+        <parent link="eef_thumb_pro"/>
+        <child link="eef_thumb_dist"/>
+        <axis xyz="0 1 0"/>
+        <limit  lower="0" upper="1.3265" velocity="100" effort="1000"/>
+        <dynamics damping="1" friction="10" />
+    </joint> 
+
+</robot>

@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="hand_T42_model">
+
+ 	<xacro:macro name="base_color">
+ 		<color rgba="0.1 0.1 0.1 1"/>
+ 	</xacro:macro>
+
+ 	<xacro:macro name="swivel_color">
+ 		<color rgba="0.1 0.1 0.1 1"/>
+ 	</xacro:macro>
+
+ 	<xacro:macro name="proximal_color">
+ 		<color rgba="0.16 0.16 0.16 1"/>
+ 	</xacro:macro>
+
+ 	 <xacro:macro name="distal_color">
+ 		<color rgba="0.16 0.16 0.16 1"/>
+ 	</xacro:macro>
+
+ 	<xacro:macro name="flex_color">
+ 		<color rgba="0.2 0.2 .2 1"/>
+ 	</xacro:macro>
+
+  <xacro:macro name="pad_color">
+    <color rgba="0.106 0.227 0.631 1"/>
+  </xacro:macro>  
+
+  <xacro:property name="rubber_friction_coefficient" value="0.1" />  <!-- True: 1.16 -->
+  <xacro:property name="rubber_contact_stiffness_coefficient" value="0.1" />
+  <xacro:property name="rubber_contact_damping_coefficient" value="1.0" />
+  <xacro:property name="swivel_distance" value="0.0260" /> <!-- Not sure if this is the right distance for T42 -->
+  <xacro:property name="joint_damping_coefficient" value="1" />
+  <xacro:property name="joint_friction_coefficient" value="10" />
+
+
+
+  <link name="world" />
+
+    <link name="rail">
+      <visual>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+          <geometry>
+            <cylinder length="0.8" radius="0.02"/>
+          </geometry>
+          <material
+            name="">
+            <xacro:base_color/>
+          </material>
+      </visual>
+      <inertial>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <mass value="0.1"/>
+          <inertia
+            ixx="0.0" ixy="0.0" ixz="0.0"
+            iyy="0.0" iyz="0.0"
+            izz="0.0"/>
+      </inertial>
+    </link>
+
+
+    <link name="base_link">
+      <visual>
+          <origin rpy="1.57 -1.57 -1.57" xyz="0.065 0 -0.04"/>
+          <geometry>
+            <mesh filename="/meshes2/base_link.STL"/>
+          </geometry>
+          <material
+            name="">
+            <xacro:base_color/>
+          </material>
+      </visual>
+      <inertial>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <mass value="0.1"/>
+          <inertia
+            ixx="0.0" ixy="0.0" ixz="0.0"
+            iyy="0.0" iyz="0.0"
+            izz="0.0"/>
+      </inertial>
+      <!-- <collision>
+        <origin rpy="1.57 0 -1.57" xyz="0.06 0.017 0"/>
+        <geometry>
+          <mesh filename="/meshes2/base_link.STL"/>
+        </geometry>
+      </collision> -->
+    </link>
+
+
+    <link name="swivel_1">
+        <visual>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0" />
+            </material>
+            <origin rpy="0 1.57 1.57" xyz="-0.016510 ${swivel_distance} 0" />
+            <geometry>
+                <mesh filename="/meshes2/swivel_t42.STL" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+    </link>
+
+
+    <link name="finger_1_1">
+        <inertial>
+            <origin xyz="-0.015875 -0.009000 -0.071550" />
+            <mass value="10" />  <!-- 0.018485 -->
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0" />
+            </material>
+            <origin xyz="-0.015875 -0.009000 -0.071550" />
+            <geometry>
+                <mesh filename="/meshes2/proximal_t42.STL" scale="0.025400 0.025400 0.025400" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="-0.015875 -0.009000 -0.071550" />
+            <geometry>
+                <mesh filename="/meshes2/proximal_t42.STL" scale="0.025400 0.025400 0.025400" />
+            </geometry>
+        </collision>
+    </link>
+
+    
+    <link name="finger_1_2">
+        <inertial>
+            <origin xyz="-0.015875 -0.011709 -0.048006" />
+            <mass value="10" /> <!-- 0.02369 -->
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <material name="green">
+                <color rgba="0.1 1.0 0.1 1.0" />
+            </material>
+            <origin xyz="-0.0 -0.0 -0.0" />
+            <!-- <origin xyz="-0.015875 -0.011709 -0.048006" /> -->  <!-- Pointed distal tips -->
+            <geometry>
+                <mesh filename="/meshes2/distal_round_t42.STL" scale="0.001 0.001 0.001" />
+                <!-- <mesh filename="/meshes2/distal_t42.STL" scale="0.025400 0.025400 0.025400" /> --> <!-- Pointed distal tips -->
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="-0.0 -0.0 -0.0" />
+            <geometry>
+                <mesh filename="/meshes2/distal_round_t42.STL" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+
+
+    <link name="swivel_2">
+        <visual>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0" />
+            </material>
+            <origin rpy="0 1.57 1.57" xyz="-0.016510 -${swivel_distance} 0" />
+            <geometry>
+                <mesh filename="/meshes2/swivel_t42.STL" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="finger_2_1">
+        <inertial>
+            <origin xyz="-0.015875 -0.009000 -0.071550" />
+            <mass value="10" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0" />
+            </material>
+            <origin xyz="-0.015875 -0.009000 -0.071550" />
+            <geometry>
+                <mesh filename="/meshes2/proximal_t42.STL" scale="0.025400 0.025400 0.025400" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="-0.015875 -0.009000 -0.071550" />
+            <geometry>
+                <mesh filename="/meshes2/proximal_t42.STL" scale="0.025400 0.025400 0.025400" />
+            </geometry>
+        </collision>
+    </link>
+
+
+    <link name="finger_2_2">
+        <inertial>
+            <origin xyz="-0.015875 -0.011709 -0.048006" />
+            <mass value="10" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <material name="orange">
+                <color rgba="0.9 0.3 0.1 1.0" />
+            </material>
+            <origin xyz="0 0 0" />
+            <geometry>
+                <mesh filename="/meshes2/distal_round_t42.STL" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" />
+            <geometry>
+                <mesh filename="/meshes2/distal_round_t42.STL" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+
+
+    <!-- Camera -->
+    <xacro:property name="camera_size" value="0.1" /> <!-- Size of square 'camera' box -->
+    <link name="camera_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="${camera_size} ${camera_size} ${camera_size}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+   
+    
+
+<!-- Sensors -->
+
+
+
+
+
+  <!-- Joints -->
+
+    <joint name="world_to_rail" type="fixed">
+        <parent link="world"/>
+        <child link="rail"/>
+      <selfCollide>false</selfCollide>
+        <origin
+          xyz="0.37 0 0.4"
+          rpy="0 0 0" />
+    </joint>
+
+    <joint name="rail_to_camera" type="fixed">
+        <parent link="rail"/>
+        <child link="camera_link"/>
+        <axis xyz="0 0 -1" />
+        <origin
+          xyz="-0.2 0 0.7"
+          rpy="0 1.57 3.14" />
+    </joint>
+
+    <joint name="rail_to_base" type="prismatic">
+        <origin rpy="0 0 0" xyz="-0.06 0.000000 0.2" />
+        <parent link="rail" />
+        <child link="base_link" />
+        <axis xyz="0 0 1"/>
+        <limit effort="1000.0" lower="0" upper="10" velocity="1"/>
+    </joint>  
+
+    <joint name="base_link_to_swivel_1" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.000000 0.000000" />
+        <parent link="base_link" />
+        <child link="swivel_1" />
+    </joint>
+
+    <joint name="base_to_finger_1_1" type="revolute">
+        <origin rpy="-1.57079632679 1.57079632679 0" xyz="-0.016510 -${swivel_distance} 0.000000" />
+        <parent link="base_link" />
+        <child link="finger_1_1" />
+        <limit effort="1000" lower="0.0" upper="3.0" velocity="2" />
+        <axis xyz="1 0 0" />
+        <dynamics damping="${joint_damping_coefficient}" friction="${joint_friction_coefficient}" />
+    </joint>
+    
+    <joint name="finger_1_1_to_finger_1_2" type="revolute">
+        <origin rpy="0 0 0" xyz="0.000000 0.000000 -0.062551" />
+        <parent link="finger_1_1" />
+        <child link="finger_1_2" />
+        <limit effort="1000" lower="0.0" upper="1.57" velocity="2" />
+        <axis xyz="1 0 0" />
+        <dynamics damping="${joint_damping_coefficient}" friction="${joint_friction_coefficient}" />
+    </joint>
+
+    <joint name="base_link_to_swivel_2" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.000000 0.000000" />
+        <parent link="base_link" />
+        <child link="swivel_2" />
+    </joint>
+
+    <joint name="base_to_finger_2_1" type="revolute">
+        <origin rpy="1.57079632679 -1.57079632679 0" xyz="-0.016510 ${swivel_distance} 0.0000" />
+        <parent link="base_link" />
+        <child link="finger_2_1" />
+        <limit effort="1000" lower="0.0" upper="3.0" velocity="2" />
+        <axis xyz="1 0 0" />
+        <dynamics damping="${joint_damping_coefficient}" friction="${joint_friction_coefficient}" />
+    </joint>
+
+    <joint name="finger_2_1_to_finger_2_2" type="revolute">
+        <origin rpy="0 0 0" xyz="0.000000 0.000000 -0.062551" />
+        <parent link="finger_2_1" />
+        <child link="finger_2_2" />
+        <limit effort="1000" lower="0.0" upper="1.57" velocity="2" />
+        <axis xyz="1 0 0" />
+        <dynamics damping="${joint_damping_coefficient}" friction="${joint_friction_coefficient}" />
+    </joint>
+    
+
+
+
+</robot>
