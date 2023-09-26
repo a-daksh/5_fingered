@@ -6,7 +6,7 @@ import pybullet as p
 import pybullet_data
 import time
 import pywt
-import random
+# import random
 import math
 import csv
 import warnings
@@ -75,15 +75,14 @@ class GraspEnv(gym.Env):
             self.initial_volume += signed_volume
 
     def reset(self, seed=None, options=None):
+        with open("W_Matrices.csv","a",newline="") as file:
+            
+            csv_writer = csv.writer(file)
+            csv_writer.writerow([" " for i in range(6)])
 
-        # with open("DR_0-75_0.5_NR.csv", "a", newline="") as file:
-
+        # with open("Matrices.csv", "a", newline="") as file:
         #     writer = csv.writer(file)
-        #     writer.writerow([self.slip, self.deformation])
-
-        with open("DR_forces.csv", "a", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow([999,999,999,999,999])
+        #     writer.writerow(["  " for i in range(30)])
 
         p.resetSimulation(p.RESET_USE_DEFORMABLE_WORLD)
         p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
@@ -131,24 +130,21 @@ class GraspEnv(gym.Env):
         self.get_force()
         del_t=time_now-self.time_prev
 
-
         if del_t<=5:
 
             p.stepSimulation()
             self.execute_action(action)
             self.state=self.get_state()
             self.reward=self.get_reward()
-            # print(self.reward)
 
             self.Terminated=False
             self.Truncated=False
-            if del_t>=4.5:
-                with open("DR_forces.csv", "a", newline="") as file:
 
-                    writer = csv.writer(file)
-                    writer.writerow([self.forces,self.points])
+            if del_t>4.5:
+                self.get_G()
 
         elif del_t>5 and del_t<=10:   
+
             # Replicating jerks at each second
             # if del_t==6 or del_t==7 or del_t==8 or del_t==9 or del_t==10:
             #     mass_random=random.uniform(0.75, 1.25)
@@ -163,11 +159,9 @@ class GraspEnv(gym.Env):
             # print(self.reward)
             self.Terminated=False
             self.Truncated=False
-            if del_t<=5.5:
-                with open("DR_forces.csv", "a", newline="") as file:
 
-                    writer = csv.writer(file)
-                    writer.writerow([self.forces,self.points])
+            if del_t<=5.5:
+                self.get_G()
         
         else:
             self.Truncated=True
@@ -301,6 +295,100 @@ class GraspEnv(gym.Env):
         for i in range(5):
             distance[i]=np.linalg.norm(np.array(object_position)-np.array(link_position[i]))
         return distance
+    
+    def get_G(self):
+
+        object_position,_=p.getBasePositionAndOrientation(self.rigidId)
+        save=[]
+        finger=[]
+        total_x=0
+        total_y=0
+        total_z=0
+        for i in {6,9,12,15,18}:
+            contacts = p.getContactPoints(bodyA=self.handId, bodyB=self.rigidId, linkIndexA=i)
+            if contacts:
+                point=contacts[0]
+                finger.append(point[5])
+            else:
+                G=np.zeros((6,3))
+
+        for point in finger:
+            total_x += point[0]
+            total_y += point[1]
+            total_z += point[2]
+
+        average_x = total_x / 5
+        average_y = total_y / 5
+        average_z = total_z / 5
+
+        center_point = [average_x, average_y, average_z]
+
+        for i in range(5):
+
+            contacts = p.getContactPoints(bodyA=self.handId, bodyB=self.rigidId, linkIndexA=i)
+
+            if contacts:
+
+                P=[np.zeros((6,6))]
+                G=[np.zeros((6,6))]
+
+                contact=contacts[0]
+                # contact=finger[i]
+                contact_normal = contact[7]  
+                n = np.array(contact_normal)
+                t = np.array([1, 0, 0])  
+                o = np.cross(n, t)
+                t = np.cross(o, n)
+                n /= np.linalg.norm(n)
+                t /= np.linalg.norm(t)
+                o /= np.linalg.norm(o)
+
+                orientaton_matrix= np.column_stack((n, t, o))
+                R1=np.hstack((orientaton_matrix,np.zeros((3,3))))
+                R2=np.hstack((np.zeros((3,3)),orientaton_matrix))
+                R=np.vstack((R1,R2))
+
+                contact_point=contact[5]
+                sub=np.array(center_point)-np.array(contact_point)
+                S=np.array(([      0, -sub[2],  sub[1]],
+                            [ sub[2],       0, -sub[0]],
+                            [-sub[1],  sub[0],       0]))
+                P1=np.hstack((np.eye(3),np.zeros((3,3))))
+                P2=np.hstack((S,np.eye(3)))
+                P=np.vstack((P1,P2))
+
+                G=np.dot(P,R)
+                H=np.array([[1,0,0,0,0,0],
+                            [0,1,0,0,0,0],
+                            [0,0,1,0,0,0]])
+                G=np.dot(G,np.transpose(H))
+
+            else:
+                G=np.zeros((6,3))
+
+            save.append(G)
+
+        temp = np.array(np.round(save,3))
+        temp = np.hstack(temp)
+        lamda = np.array([f for force in self.forces for f in (force, 0.5 * force, 0.5 * force)])
+        w=np.matmul(temp,lamda)
+
+        # add code to save save
+        # with open("Matrices.csv", "a", newline="") as file:
+
+        #     writer = csv.writer(file)
+        #     for i in range(6):
+        #         writer.writerow(temp[i])
+        #     writer.writerow(["new" for i in range(30)])
+
+        with open("W_Matrices.csv","a",newline="") as file:
+
+            csv_writer = csv.writer(file)
+            # for element in w:
+            csv_writer.writerow(w)
+        
+        return
+
     
     def get_reward(self):
 
